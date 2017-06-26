@@ -1,14 +1,14 @@
 var keystone = require('keystone');
 
 /**
- * ExamplePluginModel Model
+ * RecaptchaPluginModel Model
  * ==================
  */
 
-var ExamplePluginModel = new keystone.List('ExamplePluginModel');
+var RecaptchaPluginModel = new keystone.List('RecaptchaPluginModel');
 
-ExamplePluginModel.add({
+RecaptchaPluginModel.add({
 	entry: { type: String},
 });
 
-ExamplePluginModel.register();
+RecaptchaPluginModel.register();
