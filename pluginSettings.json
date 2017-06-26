@@ -1,0 +1,21 @@
+{
+
+  "pluginDirName": "plugin-template-connextcms",
+
+  "backboneTemplateFiles": ["connextcms/templates/exampleTemplate1.html"],
+  "backboneViewFiles": ["connextcms/views/exampleView1.js"],
+  "backboneModelFiles": ["connextcms/models/exampleBackboneModel.js"],
+  "backboneCollectionFiles": ["connextcms/models/exampleBackboneCollection.js"],
+  
+  "backboneViewNames": ["ExampleView1"],
+  "backboneModelNames": ["ExampleModel"],
+  "backboneCollectionNames": ["ExampleCollection"],
+  
+  "primaryViewInstance": "exampleView1",
+  "primaryViewConstructor": "ExampleView1",
+  "primaryViewId": "example1-link",
+  "primaryViewLabel": "Plugin Example",
+  "primaryViewFAIcon": "fa-gear"
+
+}
+
