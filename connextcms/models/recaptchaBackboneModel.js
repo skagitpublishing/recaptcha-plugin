@@ -22,6 +22,8 @@ var RecaptchaModel = Backbone.Model.extend({
     
     this.url = '/api/recaptchaplugin/'+this.id+'/update';
     
+    this.fetch(); //Get the model data from the server.
+    
     this.refreshView = false;
   },
 
@@ -36,40 +38,51 @@ var RecaptchaModel = Backbone.Model.extend({
 
     var thisModel = this;
     
-    $.post(this.url, this.attributes, function(data) {
-      //Regardless of success or failure, the API returns the JSON data of the model that was just updated.
-      //debugger;
-      
-      //If the refreshView flag is set, then refresh the Collection and then refresh the View.
-      if(thisModel.refreshView) {
-        
-        var thisPlugin = global.pluginView.getHandle('plugin-template-connextcms');
-        if(!thisPlugin) {
-          console.error('Could not find plugin that matches: '+'recaptcha-plugin');
-          return;
+    //Update an existing model.
+    if(this.id != "") {
+    
+      $.getJSON(this.url, this.attributes, function(data) {
+        //Regardless of success or failure, the API returns the JSON data of the model that was just updated.
+        debugger;
+
+        //If the refreshView flag is set, then refresh the Collection and then refresh the View.
+        if(thisModel.refreshView) {
+          
+          var thisPlugin = global.pluginView.getHandle('recaptcha-plugin');
+          if(!thisPlugin) {
+            console.error('Could not find plugin that matches: '+'recaptcha-plugin');
+            return;
+          }
+          
+          thisModel.refreshView = false;
+          thisPlugin.collections[0].refreshView = true;
+          thisPlugin.collections[0].fetch(); 
         }
-        
-        thisModel.refreshView = false;
-        thisPlugin.collections[0].refreshView = true;
-        thisPlugin.collections[0].fetch(); 
-      }
-      
-      log.push('recaptchaBackboneModel.js/save() executed.');
-    })
-    .fail(function( jqxhr, textStatus, error ) {
-      debugger;
-      
-      global.modalView.errorModal("Request failed because of: "+error+'. Error Message: '+jqxhr.responseText);
-      console.log( "Request Failed: " + error );
-      console.error('Error message: '+jqxhr.responseText);
 
-      log.push('Error while trying recaptchaBackboneModel.js/save(). Most likely due to communication issue with the server.');
-      log.push('responseText: '+jqxhr.responseText);
-      //sendLog();
-      
-      console.error('Communication error with server while execute recaptchaBackboneModel.js/save()');
-    });
+        log.push('recaptchaBackboneModel.js/save() executed.');
 
+      }).error( function(err) {
+        //This is the error handler.
+        debugger;
+        log.push('Error while trying recaptchaBackboneModel.js/save(). Most likely due to communication issue with the server.');
+        //sendLog();
+        console.error('Communication error with server while execute recaptchaBackboneModel.js/save()');
+      });
+      
+    //Create a new model
+    } else {
+      $.post('/api/recaptchaplugin/create', this.attributes, function(data) {
+        //debugger;
+        thisModel.id = data.collection._id;
+      }).error( function(err) {
+        //This is the error handler.
+        debugger;
+        log.push('Error while trying recaptchaBackboneModel.js/save(). Most likely due to communication issue with the server.');
+        //sendLog();
+        console.error('Communication error with server while execute recaptchaBackboneModel.js/save()');
+      });
+    }
+    
   }
 });
 

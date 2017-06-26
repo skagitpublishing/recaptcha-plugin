@@ -4,7 +4,6 @@
 //'use strict'; //Causes error trying to import ExampleView1 object into ConnextCMS.
 
 //Global variable to hold the template.
-//var ExampleTemplate1 = '/'+pluginData.backboneTemplateFiles[0];
 var RecaptchaTemplate1;
 
 var RecaptchaView1 = Backbone.View.extend({
@@ -17,7 +16,7 @@ var RecaptchaView1 = Backbone.View.extend({
 
   // The DOM events specific to an item.
   events: {
-    
+    'click .saveApiKey': 'saveKey'
   },
 
   initialize: function () {
@@ -35,6 +34,9 @@ var RecaptchaView1 = Backbone.View.extend({
 
       var thisView = this; //Maitain scope inside the AJAX handler.
 
+      //Assign the model to the view.
+      this.model = this.pluginHandle.models[0];
+      
       //Get the template associated with this view.
       RecaptchaTemplate1 = '/'+this.pluginData.backboneTemplateFiles[0];
       var templatePath = '/plugins/'+this.pluginData.pluginDirName+RecaptchaTemplate1;
@@ -76,11 +78,8 @@ var RecaptchaView1 = Backbone.View.extend({
     //Visually update the left menu to inidicate that this plugin view was selected.
     this.updateLeftMenuView();
     
-    //Fill in the View with any model data.
-    this.loadData();
-    
-    //Hide the delete button on the scaffolding template.
-    this.$el.find('#recaptchaScaffold').find('.delBtn').hide();
+    //Render the API key into the DOM.
+    this.$el.find('#inputApiKey').val(this.model.get('publicId'));
     
     return this;
   },
@@ -104,182 +103,14 @@ var RecaptchaView1 = Backbone.View.extend({
     $('#app-location').text('Recaptcha View');
   },
   
-  //This function is called by render(). It populates the View with Model data retrieved from the Collection.
-  loadData: function() {
-    //debugger;
+  //This function is called when the user clicks the Save button.
+  saveKey: function() {
+    debugger;
     
-    var scaffoldElem = this.$el.find('#pluginScaffold');
+    this.model.set('publicId', this.$el.find('#inputApiKey').val());
     
-    var thisCollection = this.pluginHandle.collections[0];
-    
-    //Corner case of no models in the collection or new DB.
-    if((thisCollection.models.length == 1) && (thisCollection.models[0].get('_id') == "")) {
-      //Add the click handler to the button
-      scaffoldElem.find('.addBtn').click(this.addStr);
-      return;
-    }
-    
-    //Loop through all the Models in the Collection.
-    for(var i=0; i < thisCollection.models.length; i++) {
-      //var thisModel = global.exampleCollection.models[i];
-      var thisModel = thisCollection.models[i];
-      
-      //Clone the scaffolding element      
-      var tmpElem = scaffoldElem.clone();
-      tmpElem.attr('id', 'model'+i);
-      
-      //Populate the cloned element with information from the model
-      tmpElem.find('.control-label').text('String '+i);
-      tmpElem.find('.strInput').val(thisModel.get('entry'));
-      tmpElem.find('.addBtn').text('Update');
-      
-      //Add click functions tot he cloned element.
-      tmpElem.find('.addBtn').click([i], this.updateModel);
-      tmpElem.find('.delBtn').click([i], this.delModel);
-      
-      //Add the cloned element to the DOM.
-      this.$el.find('.form-horizontal').prepend(tmpElem);
-    }
-    
-    //Add a click event to the scaffolding element.
-    scaffoldElem.find('.addBtn').click(this.addStr);
+    this.model.save();
   },
-  
-  //This function is called whenever the user clicks on the 'Update' button next to a model listing.
-  updateModel: function(event) {
-    //debugger;
-    
-    var thisPlugin = global.pluginView.getHandle('recaptcha-plugin');
-    if(!thisPlugin) {
-      console.error('Could not find plugin that matches: '+'recaptcha-plugin');
-      return;
-    }
-    
-    var thisCollection = thisPlugin.collections[0];
-    
-    //Get a handle on the selected model.
-    var modelIndex = event.data[0];
-    var thisModel = thisCollection.models[modelIndex];
-    var thisModelId = thisModel.get('_id');
-    
-    //Get a handle on this view.
-    var thisView = thisPlugin.views[0];
-    
-    //This is a corner case where there are no entries in the DB.
-    if(thisModelId == "") {
-      thisView.addStr();
-      
-    //Default behavior.
-    } else {
-      //Retrieve the updated string.
-      var newStr = thisView.$el.find('#model'+modelIndex).find('.strInput').val();
-      thisModel.set('entry', newStr);
-
-      //Persist the updated model to the server.
-      thisModel.refreshView = true;
-      thisModel.save();
-    }
-    
-   
-    
-  },
-  
-  //This function is called whenever the user clicks ont he 'Delete' button next to a model listing.
-  delModel: function(event) {
-    //debugger;
-    
-    var thisPlugin = global.pluginView.getHandle('recaptcha-plugin');
-    if(!thisPlugin) {
-      console.error('Could not find plugin that matches: '+'recaptcha-plugin');
-      return;
-    }
-    
-    var thisCollection = thisPlugin.collections[0];
-    
-    //Get a handle on the selected model.
-    var modelIndex = event.data[0];
-    var thisModel = thisCollection.models[modelIndex];
-    var thisModelId = thisModel.get('_id');
-    
-    //Delete the model on the server.
-    $.get('/api/recaptchaplugin/'+thisModelId+'/remove', '', function(data) {
-      //debugger;
-      
-      //Error Handling.
-      if(!data.success) {
-        console.error('Error deleting example plugin model '+thisModelId);
-        return;
-      }
-      
-      //Refresh the Collection and View.
-      thisCollection.refreshView = true;
-      thisCollection.fetch();
-      
-    })
-    .fail(function( jqxhr, textStatus, error ) {
-      debugger;
-      
-      try {
-        if(jqxhr.responseJSON.detail == "invalid csrf") {
-          global.modalView.errorModal('Update failed due to a bad CSRF token. Please log out and back in to refresh your CSRF token.');
-          return;
-        } else {
-          global.modalView.errorModal("Request failed because of: "+error+'. Error Message: '+jqxhr.responseText);
-          console.log( "Request Failed: " + error );
-          console.error('Error message: '+jqxhr.responseText);
-        }
-      } catch(err) {
-        console.error('Error trying to retrieve JSON data from server response.');
-      } 
-    });
-  },
-  
-  //This function is called when the user clicks the 'Add' button next to the scaffolding element.
-  addStr: function() {
-    //debugger;
-    
-    var thisPlugin = global.pluginView.getHandle('recaptcha-plugin');
-    if(!thisPlugin) {
-      console.error('Could not find plugin that matches: '+'recaptcha-plugin');
-      return;
-    }
-    
-    //Get a handle on this view.
-    var thisView = thisPlugin.views[0];
-    
-    //Get a handle on the scaffold element
-    var scaffoldElem = thisView.$el.find('#pluginScaffold');
-    
-    //Create a new model.
-    var obj = new Object();
-    obj.entry = scaffoldElem.find('.strInput').val();
-    
-    //Submit the new model to the server.
-    $.post('/api/recaptchaplugin/create', obj, function(data) {
-      //debugger;
-      
-      var thisCollection = thisPlugin.collections[0];
-      
-      thisCollection.refreshView = true;
-      thisCollection.fetch();
-    })
-    .fail(function( jqxhr, textStatus, error ) {
-      debugger;
-      
-      try {
-        if(jqxhr.responseJSON.detail == "invalid csrf") {
-          global.modalView.errorModal('Update failed due to a bad CSRF token. Please log out and back in to refresh your CSRF token.');
-          return;
-        } else {
-          global.modalView.errorModal("Request failed because of: "+error+'. Error Message: '+jqxhr.responseText);
-          console.log( "Request Failed: " + error );
-          console.error('Error message: '+jqxhr.responseText);
-        }
-      } catch(err) {
-        console.error('Error trying to retrieve JSON data from server response.');
-      } 
-    });
-  }
 
 
 });
