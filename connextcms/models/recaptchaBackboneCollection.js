@@ -1,9 +1,9 @@
 //plugin-template: exampleBackboneCollection.js
 
 //Create an empty Collection to hold all the posts.
-var ExampleCollection = Backbone.Collection.extend({ //Collection Class
+var RecaptchaCollection = Backbone.Collection.extend({ //Collection Class
   
-  model: ExampleModel,
+  model: RecaptchaModel,
   //url: 'http://'+global.serverIp+':'+global.serverPort+'/api/pagesection/list',
   url: '',
 
@@ -13,8 +13,8 @@ var ExampleCollection = Backbone.Collection.extend({ //Collection Class
     //debugger;
 
     if(response.collection.length == 0) {
-      log.push('Empty data returned by server when trying to retrieve ExampleModel collection. Most likely due to a new DB.');
-      return [global.exampleModel];
+      log.push('Empty data returned by server when trying to retrieve RecaptchaModel collection. Most likely due to a new DB.');
+      return [global.recaptchaModel];
     } else {
       return response.collection;
     }
@@ -36,7 +36,7 @@ var ExampleCollection = Backbone.Collection.extend({ //Collection Class
     //Load a handle to the plugin constructs as a local variable.
     this.pluginHandle = options.pluginHandle;
     
-    this.url = '/api/exampleplugin/list',
+    this.url = '/api/recaptchaplugin/list',
 
     this.on('add', function() {
       //debugger;
@@ -53,7 +53,7 @@ var ExampleCollection = Backbone.Collection.extend({ //Collection Class
 
       //Assumption: this funciton is only called when opening the image gallery. Therefore we need to call it again and
       //finish populating the image library.
-      log.push('Finished retrieving Example Collection data from server.');
+      log.push('Finished retrieving Recaptcha Collection data from server.');
 
     });
     

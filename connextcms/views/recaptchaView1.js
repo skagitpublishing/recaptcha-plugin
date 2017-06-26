@@ -5,9 +5,9 @@
 
 //Global variable to hold the template.
 //var ExampleTemplate1 = '/'+pluginData.backboneTemplateFiles[0];
-var ExampleTemplate1;
+var RecaptchaTemplate1;
 
-var ExampleView1 = Backbone.View.extend({
+var RecaptchaView1 = Backbone.View.extend({
 
   tagName:  'div',
 
@@ -31,13 +31,13 @@ var ExampleView1 = Backbone.View.extend({
       this.pluginHandle = this.options.pluginHandle;
 
       //Declare the view Constructor name. Needed to distinguish between views and to identify the primary view.
-      this.viewName = "ExampleView1";
+      this.viewName = "RecaptchaView1";
 
       var thisView = this; //Maitain scope inside the AJAX handler.
 
       //Get the template associated with this view.
-      ExampleTemplate1 = '/'+this.pluginData.backboneTemplateFiles[0];
-      var templatePath = '/plugins/'+this.pluginData.pluginDirName+ExampleTemplate1;
+      RecaptchaTemplate1 = '/'+this.pluginData.backboneTemplateFiles[0];
+      var templatePath = '/plugins/'+this.pluginData.pluginDirName+RecaptchaTemplate1;
       $.get(templatePath, '', function(template) {
         //debugger;
 
@@ -50,7 +50,7 @@ var ExampleView1 = Backbone.View.extend({
       });
     } catch (err) {
       debugger;
-      var msg = 'Error while trying to initial view in exampleView1.js/initialize(). Error message: ';
+      var msg = 'Error while trying to initial view in recaptchaView1.js/initialize(). Error message: ';
       console.error(msg);
       console.error(err.message);
 
@@ -80,7 +80,7 @@ var ExampleView1 = Backbone.View.extend({
     this.loadData();
     
     //Hide the delete button on the scaffolding template.
-    this.$el.find('#pluginScaffold').find('.delBtn').hide();
+    this.$el.find('#recaptchaScaffold').find('.delBtn').hide();
     
     return this;
   },
@@ -99,9 +99,9 @@ var ExampleView1 = Backbone.View.extend({
       global.leftMenuView.closeCollapsableLeftMenu();
 
     //Switch the 'active' class to the selected menu item
-    $('#example1-link').addClass('active');
+    $('#recaptcha-link').addClass('active');
 
-    $('#app-location').text('Plugin Example View');
+    $('#app-location').text('Recaptcha View');
   },
   
   //This function is called by render(). It populates the View with Model data retrieved from the Collection.
@@ -149,9 +149,9 @@ var ExampleView1 = Backbone.View.extend({
   updateModel: function(event) {
     //debugger;
     
-    var thisPlugin = global.pluginView.getHandle('plugin-template-connextcms');
+    var thisPlugin = global.pluginView.getHandle('recaptcha-plugin');
     if(!thisPlugin) {
-      console.error('Could not find plugin that matches: '+'plugin-template-connextcms');
+      console.error('Could not find plugin that matches: '+'recaptcha-plugin');
       return;
     }
     
@@ -188,9 +188,9 @@ var ExampleView1 = Backbone.View.extend({
   delModel: function(event) {
     //debugger;
     
-    var thisPlugin = global.pluginView.getHandle('plugin-template-connextcms');
+    var thisPlugin = global.pluginView.getHandle('recaptcha-plugin');
     if(!thisPlugin) {
-      console.error('Could not find plugin that matches: '+'plugin-template-connextcms');
+      console.error('Could not find plugin that matches: '+'recaptcha-plugin');
       return;
     }
     
@@ -202,7 +202,7 @@ var ExampleView1 = Backbone.View.extend({
     var thisModelId = thisModel.get('_id');
     
     //Delete the model on the server.
-    $.get('/api/exampleplugin/'+thisModelId+'/remove', '', function(data) {
+    $.get('/api/recaptchaplugin/'+thisModelId+'/remove', '', function(data) {
       //debugger;
       
       //Error Handling.
@@ -238,9 +238,9 @@ var ExampleView1 = Backbone.View.extend({
   addStr: function() {
     //debugger;
     
-    var thisPlugin = global.pluginView.getHandle('plugin-template-connextcms');
+    var thisPlugin = global.pluginView.getHandle('recaptcha-plugin');
     if(!thisPlugin) {
-      console.error('Could not find plugin that matches: '+'plugin-template-connextcms');
+      console.error('Could not find plugin that matches: '+'recaptcha-plugin');
       return;
     }
     
@@ -255,7 +255,7 @@ var ExampleView1 = Backbone.View.extend({
     obj.entry = scaffoldElem.find('.strInput').val();
     
     //Submit the new model to the server.
-    $.post('/api/exampleplugin/create', obj, function(data) {
+    $.post('/api/recaptchaplugin/create', obj, function(data) {
       //debugger;
       
       var thisCollection = thisPlugin.collections[0];

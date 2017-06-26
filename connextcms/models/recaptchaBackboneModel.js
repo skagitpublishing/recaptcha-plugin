@@ -1,8 +1,8 @@
-//plugin-template: exampleBackboneModel.js
+//plugin-template: recaptchaBackboneModel.js
 
 
 //Create local Model to represent the Post model I'll retrieve from the server.
-var ExampleModel = Backbone.Model.extend({
+var RecaptchaModel = Backbone.Model.extend({
 
   idAttribute: "_id",  //Map the Model 'id' to the '_id' assigned by the server.
 
@@ -20,7 +20,7 @@ var ExampleModel = Backbone.Model.extend({
     //Load a handle to the plugin constructs as a local variable.
     this.pluginHandle = options.pluginHandle;
     
-    this.url = '/api/exampleplugin/'+this.id+'/update';
+    this.url = '/api/recaptchaplugin/'+this.id+'/update';
     
     this.refreshView = false;
   },
@@ -45,7 +45,7 @@ var ExampleModel = Backbone.Model.extend({
         
         var thisPlugin = global.pluginView.getHandle('plugin-template-connextcms');
         if(!thisPlugin) {
-          console.error('Could not find plugin that matches: '+'plugin-template-connextcms');
+          console.error('Could not find plugin that matches: '+'recaptcha-plugin');
           return;
         }
         
@@ -54,7 +54,7 @@ var ExampleModel = Backbone.Model.extend({
         thisPlugin.collections[0].fetch(); 
       }
       
-      log.push('exampleBackboneModel.js/save() executed.');
+      log.push('recaptchaBackboneModel.js/save() executed.');
     })
     .fail(function( jqxhr, textStatus, error ) {
       debugger;
@@ -63,11 +63,11 @@ var ExampleModel = Backbone.Model.extend({
       console.log( "Request Failed: " + error );
       console.error('Error message: '+jqxhr.responseText);
 
-      log.push('Error while trying exampleBackboneModel.js/save(). Most likely due to communication issue with the server.');
+      log.push('Error while trying recaptchaBackboneModel.js/save(). Most likely due to communication issue with the server.');
       log.push('responseText: '+jqxhr.responseText);
       //sendLog();
       
-      console.error('Communication error with server while execute exampleBackboneModel.js/save()');
+      console.error('Communication error with server while execute recaptchaBackboneModel.js/save()');
     });
 
   }
