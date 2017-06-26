@@ -29,7 +29,7 @@ var RecaptchaModel = Backbone.Model.extend({
 
   defaults: {
     '_id': '',
-    'entry': '',
+    'publicId': '',
   },
 
   //Override the default Backbone save() function with one that our API understands.

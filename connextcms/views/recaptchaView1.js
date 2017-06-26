@@ -1,4 +1,4 @@
-//plugin-template: exampleView1.js
+//plugin-template: recaptchaView1.js
 //debugger;
 
 //'use strict'; //Causes error trying to import ExampleView1 object into ConnextCMS.
@@ -21,7 +21,7 @@ var RecaptchaView1 = Backbone.View.extend({
 
   initialize: function () {
     try {
-      //debugger;
+      debugger;
 
       //Load the plugin metdata as a local variables.
       this.pluginData = this.options.pluginData;
@@ -79,7 +79,11 @@ var RecaptchaView1 = Backbone.View.extend({
     this.updateLeftMenuView();
     
     //Render the API key into the DOM.
-    this.$el.find('#inputApiKey').val(this.model.get('publicId'));
+    if(this.model == undefined) {
+      
+    } else {
+      this.$el.find('#inputApiKey').val(this.model.get('publicId'));
+    }
     
     return this;
   },

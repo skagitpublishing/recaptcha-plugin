@@ -1,4 +1,4 @@
-//plugin-template: exampleBackboneCollection.js
+//plugin-template: recaptchaBackboneCollection.js
 
 //Create an empty Collection to hold all the posts.
 var RecaptchaCollection = Backbone.Collection.extend({ //Collection Class
