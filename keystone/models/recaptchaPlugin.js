@@ -8,7 +8,7 @@ var keystone = require('keystone');
 var RecaptchaPluginModel = new keystone.List('RecaptchaPluginModel');
 
 RecaptchaPluginModel.add({
-	entry: { type: String},
+	publicId: { type: String},
 });
 
 RecaptchaPluginModel.register();
