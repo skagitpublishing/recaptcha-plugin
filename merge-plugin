@@ -3,7 +3,7 @@ echo Preparing to copy into myCMS directory...
 
 echo Copying plugin files into /public/plugins directory
 mkdir ../myCMS/public/plugins
-cp -rf ../plugin-template-connextcms ../myCMS/public/plugins/
+cp -rf ../recaptcha-plugin ../myCMS/public/plugins/
 
 echo Copying Keystone Models
 cp keystone/models/*.js ../myCMS/models/
