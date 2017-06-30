@@ -142,8 +142,8 @@ exports.validateresponse = function(req, res) {
     
 		if (err) return res.apiError('database error', err);
 		
-    var secret = items[0];
-    var response = data;
+    var secret = items[0].get('privateKey');
+    var captchaResponse = data.captchaResponse;
     
     
     //Create an HTTP form.
@@ -151,7 +151,7 @@ exports.validateresponse = function(req, res) {
 
     //Append the log file to the Form.
     form.append('secret', secret);
-    form.append('reponse', response);
+    form.append('reponse', captchaResponse);
 
     //Create an http request.
     var request = http.request({

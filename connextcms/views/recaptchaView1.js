@@ -83,7 +83,7 @@ var RecaptchaView1 = Backbone.View.extend({
     if(this.model == undefined) {
       
     } else {
-      this.$el.find('#inputApiKey').val(this.model.get('publicId'));
+      this.$el.find('#inputApiKey').val(this.model.get('privateKey'));
     }
     
     return this;
@@ -112,7 +112,7 @@ var RecaptchaView1 = Backbone.View.extend({
   saveKey: function() {
     debugger;
     
-    this.model.set('publicId', this.$el.find('#inputApiKey').val());
+    this.model.set('privateKey', this.$el.find('#inputApiKey').val());
     
     this.model.save();
   },
