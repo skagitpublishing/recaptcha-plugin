@@ -1,5 +1,6 @@
 var async = require('async'),
 	keystone = require('keystone');
+var request = require('request');
 
 
 var RecaptchaPluginModel = keystone.list('RecaptchaPluginModel');
@@ -141,8 +142,44 @@ exports.validateresponse = function(req, res) {
     
 		if (err) return res.apiError('database error', err);
 		
+    var secret = items[0];
+    var response = data;
+    
+    
+    //Create an HTTP form.
+    var form = new FormData();
+
+    //Append the log file to the Form.
+    form.append('secret', secret);
+    form.append('reponse', response);
+
+    //Create an http request.
+    var request = http.request({
+      method: 'post',
+      host: 'https://www.google.com',
+      //port: globalThis.trackerServerPort,
+      //path: '/api/trackinglogfile/create',
+      path: '/recaptcha/api/siteverify',
+      headers: form.getHeaders()
+    });
+
+    //Pipe the form into the http request.
+    form.pipe(request);
+
+    //If the server responds.
+    request.on('response', function(res) {
+      debugger;
+
+    });
+
+    //If the server does not respond.
+    request.on('error', function(err) {
+      debugger;
+
+    });
+    
 		res.apiResponse({
-			collection: items
+			collection: true
 		});
 		
 	});
