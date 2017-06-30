@@ -34,8 +34,6 @@ var RecaptchaView1 = Backbone.View.extend({
 
       var thisView = this; //Maitain scope inside the AJAX handler.
 
-      //Assign the model to the view.
-      this.model = this.pluginHandle.models[0];
       
       //Get the template associated with this view.
       RecaptchaTemplate1 = '/'+this.pluginData.backboneTemplateFiles[0];
@@ -67,6 +65,9 @@ var RecaptchaView1 = Backbone.View.extend({
 
   render: function () {
     //debugger;
+    
+    //Assign the model to the view.
+    this.model = this.pluginHandle.models[0];
     
     //Hide all views.
     global.leftMenuView.hideAll();
