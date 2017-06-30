@@ -10,7 +10,7 @@ var RecaptchaCollection = Backbone.Collection.extend({ //Collection Class
   //parse is called when data is returned from the server after a fetch() call.
   //Parse allows me to massage non-standard data before it is returned to the collection.
   parse: function(response) {
-    debugger;
+    //debugger;
 
     if(response.collection.length == 0) {
       log.push('Empty data returned by server when trying to retrieve RecaptchaModel collection. Most likely due to a new DB.');

@@ -36,7 +36,7 @@ var RecaptchaModel = Backbone.Model.extend({
 
   //Override the default Backbone save() function with one that our API understands.
   save: function() {
-    debugger;
+    //debugger;
 
     var thisModel = this;
     

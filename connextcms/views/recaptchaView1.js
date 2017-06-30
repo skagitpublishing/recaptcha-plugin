@@ -21,7 +21,7 @@ var RecaptchaView1 = Backbone.View.extend({
 
   initialize: function () {
     try {
-      debugger;
+      //debugger;
 
       //Load the plugin metdata as a local variables.
       this.pluginData = this.options.pluginData;
