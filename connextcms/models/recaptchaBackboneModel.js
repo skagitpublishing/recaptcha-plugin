@@ -12,7 +12,7 @@ var RecaptchaModel = Backbone.Model.extend({
   //Initialize is called upon the instantiation of this model. This function is executed once
   //per model retrieved from the server.
   initialize: function(attributes, options) {
-    debugger;
+    //debugger;
 
     //Load the plugin metdata as a local variables.
     this.pluginData = options.pluginData;
@@ -45,7 +45,7 @@ var RecaptchaModel = Backbone.Model.extend({
     
       $.getJSON(this.url, this.attributes, function(data) {
         //Regardless of success or failure, the API returns the JSON data of the model that was just updated.
-        debugger;
+        //debugger;
 
         //If the refreshView flag is set, then refresh the Collection and then refresh the View.
         if(thisModel.refreshView) {

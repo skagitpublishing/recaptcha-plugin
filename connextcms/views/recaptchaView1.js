@@ -110,7 +110,7 @@ var RecaptchaView1 = Backbone.View.extend({
   
   //This function is called when the user clicks the Save button.
   saveKey: function() {
-    debugger;
+    //debugger;
     
     this.model.set('privateKey', this.$el.find('#inputApiKey').val());
     

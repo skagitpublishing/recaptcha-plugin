@@ -1,6 +1,7 @@
 var async = require('async'),
 	keystone = require('keystone');
 var request = require('request');
+var FormData = require('form-data');
 
 
 var RecaptchaPluginModel = keystone.list('RecaptchaPluginModel');
@@ -142,8 +143,12 @@ exports.validateresponse = function(req, res) {
     
 		if (err) return res.apiError('database error', err);
 		
-    var secret = items[0].get('privateKey');
-    var captchaResponse = data.captchaResponse;
+    try {
+      var secret = items[0].get('privateKey');
+      var captchaResponse = data.captchaResponse;
+    } catch(err) {
+      res.apiError('Input error', err);
+    }
     
     
     //Create an HTTP form.
