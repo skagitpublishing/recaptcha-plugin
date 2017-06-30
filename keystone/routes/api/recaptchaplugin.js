@@ -128,3 +128,23 @@ exports.remove = function(req, res) {
 	});
 }
 
+
+/*
+  Verify the captcha response with the google server.
+*/
+exports.validateresponse = function(req, res) {
+  
+  data = (req.method == 'POST') ? req.body : req.query;
+  
+  RecaptchaPluginModel.model.find(function(err, items) {
+    debugger;
+    
+		if (err) return res.apiError('database error', err);
+		
+		res.apiResponse({
+			collection: items
+		});
+		
+	});
+};
+
