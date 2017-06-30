@@ -67,7 +67,7 @@ var RecaptchaView1 = Backbone.View.extend({
     //debugger;
     
     //Assign the model to the view.
-    this.model = this.pluginHandle.models[0];
+    this.model = this.pluginHandle.collections[0].models[0];
     
     //Hide all views.
     global.leftMenuView.hideAll();

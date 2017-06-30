@@ -12,7 +12,7 @@ var RecaptchaModel = Backbone.Model.extend({
   //Initialize is called upon the instantiation of this model. This function is executed once
   //per model retrieved from the server.
   initialize: function(attributes, options) {
-    //debugger;
+    debugger;
 
     //Load the plugin metdata as a local variables.
     this.pluginData = options.pluginData;
@@ -22,9 +22,11 @@ var RecaptchaModel = Backbone.Model.extend({
     
     this.url = '/api/recaptchaplugin/'+this.id+'/update';
     
-    this.fetch(); //Get the model data from the server.
+    if(this.id != "") {
+      this.refreshView = false;
+      this.fetch(); //Get the model data from the server.
+    }
     
-    this.refreshView = false;
   },
 
   defaults: {
@@ -34,7 +36,7 @@ var RecaptchaModel = Backbone.Model.extend({
 
   //Override the default Backbone save() function with one that our API understands.
   save: function() {
-    //debugger;
+    debugger;
 
     var thisModel = this;
     
