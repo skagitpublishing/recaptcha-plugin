@@ -61,12 +61,8 @@ function validateMessage() {
     var err = textStatus + ", " + error;
 
     try {
-      if(jqxhr.responseText.indexOf("Invalid MailGun settings") != -1) {
-        console.error('Can not email log to adminstrator for debugging! Have you set you MailGun settings correctly?');
-      } else {
-        console.log( "Request to /api/sendlog Failed: " + error );
-        console.error('Error message: '+jqxhr.responseText);
-      }
+      console.log( "Request to /api/recaptchaplugin/validateresponse Failed: " + error );
+      console.error('Error message: '+jqxhr.responseText);
     } catch(err) {
       console.error('Error trying to send log to admin!');
     }            
