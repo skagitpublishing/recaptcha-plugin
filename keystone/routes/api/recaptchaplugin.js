@@ -158,7 +158,9 @@ exports.validateresponse = function(req, res) {
     form.append('secret', secret);
     form.append('reponse', captchaResponse);
 
+    
     //Create an http request.
+    /*
     var request = http.request({
       method: 'post',
       url: 'https://www.google.com/recaptcha/api/siteverify',
@@ -167,7 +169,11 @@ exports.validateresponse = function(req, res) {
       //path: '',
       //headers: form.getHeaders()
     });
+    
+    
 
+    
+    
     //Pipe the form into the http request.
     form.pipe(request);
 
@@ -175,6 +181,17 @@ exports.validateresponse = function(req, res) {
     request.on('response', function(res) {
       debugger;
 
+      if(res.statusCode == 404) {
+        res.apiResponse({
+          collection: false
+        });
+      } else {
+        debugger;
+        res.apiResponse({
+          collection: true
+        });
+      }
+      
     });
 
     //If the server does not respond.
@@ -182,10 +199,13 @@ exports.validateresponse = function(req, res) {
       debugger;
 
     });
+    */
     
-		res.apiResponse({
-			collection: true
-		});
+    var customUrl = 'https://www.google.com/recaptcha/api/siteverify?secret='+secret+'&response='+captchaResponse;
+    request(customUrl, function(error,response,body) {
+      debugger;
+    });
+		
 		
 	});
 };
