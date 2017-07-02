@@ -1,8 +1,8 @@
 var async = require('async'),
 	keystone = require('keystone');
 var request = require('request');
-var FormData = require('form-data');
-var http = require('http');
+//var FormData = require('form-data');
+//var http = require('http');
 
 var RecaptchaPluginModel = keystone.list('RecaptchaPluginModel');
 
@@ -151,56 +151,6 @@ exports.validateresponse = function(req, res) {
     }
     
     
-    //Create an HTTP form.
-    var form = new FormData();
-
-    //Append the log file to the Form.
-    form.append('secret', secret);
-    form.append('reponse', captchaResponse);
-
-    
-    //Create an http request.
-    /*
-    var request = http.request({
-      method: 'post',
-      url: 'https://www.google.com/recaptcha/api/siteverify',
-      //port: globalThis.trackerServerPort,
-      //path: '/api/trackinglogfile/create',
-      //path: '',
-      //headers: form.getHeaders()
-    });
-    
-    
-
-    
-    
-    //Pipe the form into the http request.
-    form.pipe(request);
-
-    //If the server responds.
-    request.on('response', function(res) {
-      debugger;
-
-      if(res.statusCode == 404) {
-        res.apiResponse({
-          collection: false
-        });
-      } else {
-        debugger;
-        res.apiResponse({
-          collection: true
-        });
-      }
-      
-    });
-
-    //If the server does not respond.
-    request.on('error', function(err) {
-      debugger;
-
-    });
-    */
-    
     var customUrl = 'https://www.google.com/recaptcha/api/siteverify?secret='+secret+'&response='+captchaResponse;
     request(customUrl, function(error,response,body) {
       debugger;
@@ -210,17 +160,17 @@ exports.validateresponse = function(req, res) {
         
         if(body.success == true) {
           res.apiResponse({
-            collection: true
+            success: true
           });
         } else {
           res.apiResponse({
-            collection: false
+            success: false
           });
         }
         
       } catch(err) {
         res.apiResponse({
-          collection: false
+          success: false
         });
         console.log('Error trying to process reCAPTCHA response from the google server: '+err.message)
       }
