@@ -2,7 +2,7 @@ var async = require('async'),
 	keystone = require('keystone');
 var request = require('request');
 var FormData = require('form-data');
-
+var http = require('http');
 
 var RecaptchaPluginModel = keystone.list('RecaptchaPluginModel');
 
