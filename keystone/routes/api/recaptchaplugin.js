@@ -204,6 +204,28 @@ exports.validateresponse = function(req, res) {
     var customUrl = 'https://www.google.com/recaptcha/api/siteverify?secret='+secret+'&response='+captchaResponse;
     request(customUrl, function(error,response,body) {
       debugger;
+      
+      try {
+        var body = JSON.parse(body);
+        
+        if(body.success == true) {
+          res.apiResponse({
+            collection: true
+          });
+        } else {
+          res.apiResponse({
+            collection: false
+          });
+        }
+        
+      } catch(err) {
+        res.apiResponse({
+          collection: false
+        });
+        console.log('Error trying to process reCAPTCHA response from the google server: '+err.message)
+      }
+      
+      
     });
 		
 		
