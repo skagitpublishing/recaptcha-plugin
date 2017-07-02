@@ -139,7 +139,7 @@ exports.validateresponse = function(req, res) {
   data = (req.method == 'POST') ? req.body : req.query;
   
   RecaptchaPluginModel.model.find(function(err, items) {
-    debugger;
+    //debugger;
     
 		if (err) return res.apiError('database error', err);
 		
@@ -153,7 +153,7 @@ exports.validateresponse = function(req, res) {
     
     var customUrl = 'https://www.google.com/recaptcha/api/siteverify?secret='+secret+'&response='+captchaResponse;
     request(customUrl, function(error,response,body) {
-      debugger;
+      //debugger;
       
       try {
         var body = JSON.parse(body);
@@ -169,16 +169,11 @@ exports.validateresponse = function(req, res) {
         }
         
       } catch(err) {
-        res.apiResponse({
-          success: false
-        });
+        res.apiError('Error communicating with Google reCAPTCHA service. ', err);
         console.log('Error trying to process reCAPTCHA response from the google server: '+err.message)
       }
       
-      
     });
-		
-		
 	});
 };
 
