@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.all('/api/recaptchaplugin/:id/update', keystone.middleware.api, routes.api.recaptchaplugin.update);
 	app.get('/api/recaptchaplugin/:id/remove', keystone.middleware.api, routes.api.recaptchaplugin.remove);
   
-  app.all('/api/recaptuchaplugin/validateresponse', keystone.middleware.api, routes.api.recaptchaplugin.validateresponse);
+  app.all('/api/recaptchaplugin/validateresponse', keystone.middleware.api, routes.api.recaptchaplugin.validateresponse);
   
   // NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
