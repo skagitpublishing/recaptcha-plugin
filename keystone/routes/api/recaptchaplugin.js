@@ -161,11 +161,11 @@ exports.validateresponse = function(req, res) {
     //Create an http request.
     var request = http.request({
       method: 'post',
-      url: 'https://www.google.com/recaptcha/api/siteverify',
+      uri: 'https://www.google.com/recaptcha/api/siteverify',
       //port: globalThis.trackerServerPort,
       //path: '/api/trackinglogfile/create',
       //path: '',
-      headers: form.getHeaders()
+      //headers: form.getHeaders()
     });
 
     //Pipe the form into the http request.
